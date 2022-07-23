@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  postgres:
+    container_name: cb-postgres
+    image: postgres:13.1-alpine
+    environment:
+      - POSTGRES_USER=cb_test
+      - POSTGRES_PASSWORD=cb_test
+      - POSTGRES_DB=cb_test
+      - PGDATA=/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    volumes:
+      - './data:/var/lib/postgresql/data'
+      - './testdata:/testdata'
