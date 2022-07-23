@@ -1,4 +1,4 @@
-package chat
+package barter
 
 import (
 	"context"
@@ -8,15 +8,15 @@ import (
 	"github.com/golang/mock/gomock"
 )
 
-type serviceMock struct {
+type barterServiceMock struct {
 }
 
-func buildServiceMock(ctrl *gomock.Controller) serviceMock {
-	return serviceMock{}
+func buildBarterServiceMock(ctrl *gomock.Controller) barterServiceMock {
+	return barterServiceMock{}
 }
-func buildService(mock serviceMock) *Service {
-	param := ServiceParam{}
-	return NewService(context.Background(), param)
+func buildService(mock barterServiceMock) *BarterService {
+	param := BarterServiceParam{}
+	return NewBarterService(context.Background(), param)
 }
 
 // nolint
