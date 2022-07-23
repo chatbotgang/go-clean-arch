@@ -1,0 +1,16 @@
+run:
+  deadline: 5m
+
+output:
+  sort-results: true
+
+linters:
+  enable:
+    - goimports
+    - misspell
+    - gosec
+    - goimports
+
+linters-settings:
+  goimports:
+    local-prefixes: github.com/chatbotgang/barter
