@@ -24,9 +24,9 @@ func respondWithJSON(c *gin.Context, code int, payload interface{}) {
 	c.JSON(code, payload)
 }
 
-func respondWithoutBody(c *gin.Context, code int) {
-	c.Status(code)
-}
+//func respondWithoutBody(c *gin.Context, code int) {
+//	c.Status(code)
+//}
 
 func respondWithError(c *gin.Context, err error) {
 	errMessage := parseError(err)
