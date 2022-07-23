@@ -10,10 +10,13 @@ import (
 	_ "github.com/lib/pq"
 
 	"github.com/chatbotgang/go-clean-architecture-template/internal/adapter/repository/postgres"
+	"github.com/chatbotgang/go-clean-architecture-template/internal/adapter/server"
+	"github.com/chatbotgang/go-clean-architecture-template/internal/app/service/barter"
 )
 
 type Application struct {
-	Params ApplicationParams
+	Params        ApplicationParams
+	BarterService *barter.BarterService
 }
 
 type ApplicationParams struct {
@@ -43,11 +46,18 @@ func NewApplication(ctx context.Context, wg *sync.WaitGroup, params ApplicationP
 	if err := db.Ping(); err != nil {
 		return nil, err
 	}
-	_ = postgres.NewPostgresRepository(ctx, db)
+	pgRepo := postgres.NewPostgresRepository(ctx, db)
+
+	// Create servers
+	authServer := server.NewAuthServer(ctx, server.AuthServerParam{})
 
 	// Create application
 	app := &Application{
 		Params: params,
+		BarterService: barter.NewBarterService(ctx, barter.BarterServiceParam{
+			AuthServer: authServer,
+			TraderRepo: pgRepo,
+		}),
 	}
 
 	return app, nil
