@@ -20,4 +20,9 @@ func registerAPIHandlers(router *gin.Engine, app *app.Application) {
 	// Add health-check
 	v1.GET("/health", handlerHealthCheck())
 
+	// Add auth namespace
+	authGroup := v1.Group("/barter")
+	{
+		authGroup.POST("/traders", RegisterTrader(app))
+	}
 }
