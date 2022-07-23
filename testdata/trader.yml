@@ -1,0 +1,9 @@
+- id: 1
+  uid: "c369b9e54f8fd07c8e74cac1"
+  email: "trader1@cresclab.com"
+  name: "trader1"
+
+- id: 2
+  uid: "c369b9e594fcd07c8e74cac2"
+  email: "trader2@cresclab.com"
+  name: "trader2"
