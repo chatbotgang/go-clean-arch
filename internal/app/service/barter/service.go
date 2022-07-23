@@ -7,13 +7,20 @@ import (
 )
 
 type BarterService struct {
+	authServer AuthServer
+	traderRepo TraderRepository
 }
 
 type BarterServiceParam struct {
+	AuthServer AuthServer
+	TraderRepo TraderRepository
 }
 
 func NewBarterService(_ context.Context, param BarterServiceParam) *BarterService {
-	return &BarterService{}
+	return &BarterService{
+		authServer: param.AuthServer,
+		traderRepo: param.TraderRepo,
+	}
 }
 
 // logger wrap the execution context with component info
