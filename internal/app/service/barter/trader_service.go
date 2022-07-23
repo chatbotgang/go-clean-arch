@@ -18,9 +18,9 @@ func (s *BarterService) RegisterTrader(ctx context.Context, param RegisterTrader
 	// Check the given trader email exist or not
 	_, err := s.traderRepo.GetTraderByEmail(ctx, param.Email)
 	if err == nil {
-		msg := "trader exist"
+		msg := "email exists"
 		s.logger(ctx).Error().Msg(msg)
-		return nil, common.NewError(common.ErrorCodeParameterInvalid, errors.New(msg))
+		return nil, common.NewError(common.ErrorCodeParameterInvalid, errors.New(msg), common.WithMsg(msg))
 	}
 
 	// If not existed:
