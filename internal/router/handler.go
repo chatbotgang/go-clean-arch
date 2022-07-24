@@ -35,5 +35,6 @@ func registerAPIHandlers(router *gin.Engine, app *app.Application) {
 		barterGroup.GET("/goods", ListMyGoods(app))
 		barterGroup.GET("/goods/traders", ListOthersGoods(app))
 		barterGroup.DELETE("/goods/:good_id", RemoveMyGood(app))
+		barterGroup.POST("/goods/exchange", ExchangeGoods(app))
 	}
 }
