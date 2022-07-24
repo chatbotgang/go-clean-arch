@@ -9,6 +9,7 @@ var basepath string
 
 const (
 	TestDataTrader = "trader.yml"
+	TestDataGood   = "good.yml"
 )
 
 func init() {

@@ -1,0 +1,7 @@
+- id: 1
+  name: "good 1"
+  owner_id: 1
+
+- id: 2
+  name: "good 2"
+  owner_id: 1
