@@ -33,8 +33,7 @@ func (s *BarterService) ExchangeGoods(ctx context.Context, param ExchangeGoodsPa
 	}
 
 	// 3. Exchange ownerships of two goods
-	requestGood.OwnerID, targetGood.OwnerID = targetGood.OwnerID, requestGood.OwnerID
-	_, err = s.goodRepo.UpdateGoods(ctx, []barter.Good{*requestGood, *targetGood})
+	_, err = s.goodRepo.UpdateGoods(ctx, barter.ExchangeGoods(*requestGood, *targetGood))
 	if err != nil {
 		s.logger(ctx).Error().Err(err).Msg("failed to exchange goods")
 		return err
