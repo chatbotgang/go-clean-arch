@@ -20,7 +20,7 @@ func (s *BarterService) ExchangeGoods(ctx context.Context, param ExchangeGoodsPa
 		s.logger(ctx).Error().Err(err).Msg("failed to get request good")
 		return err
 	}
-	if !requestGood.MyGood(param.Trader) {
+	if !requestGood.IsMyGood(param.Trader) {
 		s.logger(ctx).Error().Msg("not the owner of request good")
 		return common.NewError(common.ErrorCodeAuthPermissionDenied, nil)
 	}

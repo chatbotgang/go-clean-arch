@@ -42,7 +42,7 @@ func (s *BarterService) ListOthersGoods(ctx context.Context, param ListOthersGoo
 	var filteredGoods []barter.Good
 	for i := range goods {
 		g := goods[i]
-		if !g.MyGood(param.Trader) {
+		if !g.IsMyGood(param.Trader) {
 			filteredGoods = append(filteredGoods, g)
 		}
 	}
@@ -63,7 +63,7 @@ func (s *BarterService) RemoveMyGood(ctx context.Context, param RemoveGoodParam)
 	}
 
 	// Check the ownership
-	if !good.MyGood(param.Trader) {
+	if !good.IsMyGood(param.Trader) {
 		s.logger(ctx).Error().
 			Int("traderID", param.Trader.ID).
 			Int("goodOwnerID", good.OwnerID).

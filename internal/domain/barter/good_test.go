@@ -7,7 +7,7 @@ import (
 	"gotest.tools/assert"
 )
 
-func TestGood_MyGood(t *testing.T) {
+func TestGood_IsMyGood(t *testing.T) {
 	t.Parallel()
 	// Args
 	type Args struct {
@@ -47,7 +47,7 @@ func TestGood_MyGood(t *testing.T) {
 		c := testCases[i]
 		t.Run(c.Name, func(t *testing.T) {
 			a := c.SetupArgs(t)
-			ok := a.Good.MyGood(a.Trader)
+			ok := a.Good.IsMyGood(a.Trader)
 
 			assert.Equal(t, c.ExpectResult, ok)
 		})

@@ -25,6 +25,6 @@ func TestExchangeGoods(t *testing.T) {
 	goods := ExchangeGoods(args.Good1, args.Good2)
 
 	require.Len(t, goods, 2)
-	assert.True(t, goods[0].MyGood(args.Trader2))
-	assert.True(t, goods[1].MyGood(args.Trader1))
+	assert.True(t, goods[0].IsMyGood(args.Trader2))
+	assert.True(t, goods[1].IsMyGood(args.Trader1))
 }
