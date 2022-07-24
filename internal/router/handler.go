@@ -24,5 +24,6 @@ func registerAPIHandlers(router *gin.Engine, app *app.Application) {
 	authGroup := v1.Group("/auth")
 	{
 		authGroup.POST("/traders", RegisterTrader(app))
+		authGroup.POST("/traders/login", LoginTrader(app))
 	}
 }
