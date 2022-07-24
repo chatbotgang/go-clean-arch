@@ -13,6 +13,6 @@ type GoodRepository interface {
 	GetGoodByID(ctx context.Context, id int) (*barter.Good, common.Error)
 	ListGoods(ctx context.Context) ([]barter.Good, common.Error)
 	ListGoodsByOwner(ctx context.Context, ownerID int) ([]barter.Good, common.Error)
-	UpdateGood(ctx context.Context, good barter.Good) (*barter.Good, common.Error)
+	UpdateGoods(ctx context.Context, goods []barter.Good) ([]barter.Good, common.Error)
 	DeleteGoodByID(ctx context.Context, id int) common.Error
 }
