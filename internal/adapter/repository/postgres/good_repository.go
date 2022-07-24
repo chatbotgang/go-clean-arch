@@ -139,7 +139,42 @@ func (r *PostgresRepository) listGoods(ctx context.Context, db sqlContextGetter,
 	return goods, nil
 }
 
-func (r *PostgresRepository) UpdateGood(ctx context.Context, good barter.Good) (*barter.Good, common.Error) {
+func (r *PostgresRepository) UpdateGood(ctx context.Context, good barter.Good) (updatedGood *barter.Good, err common.Error) {
+	// When using beginTx(), we need to make sure we have used named return values 'err'.
+	// Otherwise, the defer function finishTx() won't work.
+	tx, err := r.beginTx()
+	if err != nil {
+		return nil, err
+	}
+	defer func() {
+		err = r.finishTx(err, tx)
+	}()
+	return r.updateGood(ctx, tx, good)
+}
+
+func (r *PostgresRepository) UpdateGoods(ctx context.Context, goods []barter.Good) (updatedGoods []barter.Good, err common.Error) {
+	// When using beginTx(), we need to make sure we have used named return values 'err'.
+	// Otherwise, the defer function finishTx() won't work.
+	tx, err := r.beginTx()
+	if err != nil {
+		return nil, err
+	}
+	defer func() {
+		err = r.finishTx(err, tx)
+	}()
+
+	for i := range goods {
+		updatedGood, err := r.updateGood(ctx, tx, goods[i])
+		if err != nil {
+			return nil, err
+		}
+		updatedGoods = append(updatedGoods, *updatedGood)
+	}
+
+	return updatedGoods, nil
+}
+
+func (r *PostgresRepository) updateGood(ctx context.Context, db sqlContextGetter, good barter.Good) (*barter.Good, common.Error) {
 	where := sq.And{
 		sq.Eq{repoColumnGood.ID: good.ID},
 	}
@@ -162,7 +197,7 @@ func (r *PostgresRepository) UpdateGood(ctx context.Context, good barter.Good) (
 
 	// execute SQL query
 	var row repoGood
-	if err = r.db.GetContext(ctx, &row, query, args...); err != nil {
+	if err = db.GetContext(ctx, &row, query, args...); err != nil {
 		return nil, common.NewError(common.ErrorCodeRemoteProcess, err)
 	}
 

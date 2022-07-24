@@ -92,6 +92,29 @@ func TestPostgresRepository_UpdateGood(t *testing.T) {
 	assertGood(t, good, updatedGood)
 }
 
+func TestPostgresRepository_UpdateGoods(t *testing.T) {
+	db := getTestPostgresDB()
+	repo := initRepository(t, db,
+		testdata.Path(testdata.TestDataTrader),
+		testdata.Path(testdata.TestDataGood),
+	)
+
+	good1, err := repo.GetGoodByID(context.Background(), 1)
+	require.NoError(t, err)
+
+	good2, err := repo.GetGoodByID(context.Background(), 2)
+	require.NoError(t, err)
+
+	newName := "good 123"
+	good1.Name = newName
+	good2.Name = newName
+
+	updatedGoods, err := repo.UpdateGoods(context.Background(), []barter.Good{*good1, *good2})
+	require.NoError(t, err)
+	assertGood(t, good1, &updatedGoods[0])
+	assertGood(t, good2, &updatedGoods[1])
+}
+
 func TestPostgresRepository_DeleteGoodByID(t *testing.T) {
 	db := getTestPostgresDB()
 	repo := initRepository(t, db,
