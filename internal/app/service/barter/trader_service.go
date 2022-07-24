@@ -40,3 +40,29 @@ func (s *BarterService) RegisterTrader(ctx context.Context, param RegisterTrader
 
 	return trader, nil
 }
+
+type LoginTraderParam struct {
+	Email    string
+	Password string
+}
+
+func (s *BarterService) LoginTrader(ctx context.Context, param LoginTraderParam) (*barter.Trader, common.Error) {
+	// Check the given trader email exist or not
+	trader, err := s.traderRepo.GetTraderByEmail(ctx, param.Email)
+	if err != nil {
+		s.logger(ctx).Error().Err(err).Msg("failed to get trader")
+		msg := "email does not exist"
+		return nil, common.NewError(common.ErrorCodeParameterInvalid, errors.New(msg), common.WithMsg(msg))
+	}
+
+	// Authenticate the account
+	err = s.authServer.AuthenticateAccount(ctx, param.Email, param.Password)
+	if err != nil {
+		s.logger(ctx).Error().Err(err).Msg("failed to authenticate account")
+		msg := "invalid password"
+		s.logger(ctx).Error().Msg(msg)
+		return nil, common.NewError(common.ErrorCodeParameterInvalid, errors.New(msg), common.WithMsg(msg))
+	}
+
+	return trader, nil
+}
