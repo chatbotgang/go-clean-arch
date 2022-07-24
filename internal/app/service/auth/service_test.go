@@ -1,4 +1,4 @@
-package barter
+package auth
 
 import (
 	"context"
@@ -7,26 +7,26 @@ import (
 	"github.com/bxcodec/faker/v3"
 	"github.com/golang/mock/gomock"
 
-	"github.com/chatbotgang/go-clean-architecture-template/internal/app/service/barter/automock"
+	"github.com/chatbotgang/go-clean-architecture-template/internal/app/service/auth/automock"
 )
 
-type barterServiceMock struct {
+type serviceMock struct {
 	AuthServer *automock.MockAuthServer
 	TraderRepo *automock.MockTraderRepository
 }
 
-func buildBarterServiceMock(ctrl *gomock.Controller) barterServiceMock {
-	return barterServiceMock{
+func buildServiceMock(ctrl *gomock.Controller) serviceMock {
+	return serviceMock{
 		AuthServer: automock.NewMockAuthServer(ctrl),
 		TraderRepo: automock.NewMockTraderRepository(ctrl),
 	}
 }
-func buildBarterService(mock barterServiceMock) *BarterService {
-	param := BarterServiceParam{
+func buildService(mock serviceMock) *AuthService {
+	param := AuthServiceParam{
 		AuthServer: mock.AuthServer,
 		TraderRepo: mock.TraderRepo,
 	}
-	return NewBarterService(context.Background(), param)
+	return NewAuthService(context.Background(), param)
 }
 
 // nolint
