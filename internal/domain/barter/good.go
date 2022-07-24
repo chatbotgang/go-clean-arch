@@ -18,6 +18,6 @@ func NewGood(trader Trader, goodName string) Good {
 	}
 }
 
-func (d *Good) MyGood(trader Trader) bool {
+func (d *Good) IsMyGood(trader Trader) bool {
 	return d.OwnerID == trader.ID
 }
