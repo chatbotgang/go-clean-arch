@@ -58,3 +58,48 @@ func RegisterTrader(app *app.Application) gin.HandlerFunc {
 		respondWithJSON(c, http.StatusCreated, resp)
 	}
 }
+
+func LoginTrader(app *app.Application) gin.HandlerFunc {
+	type Body struct {
+		Email    string `json:"email" binding:"required,email"`
+		Password string `json:"password" binding:"required"`
+	}
+
+	type Response struct {
+		TraderID int    `json:"trader_id"`
+		Token    string `json:"token"`
+	}
+
+	return func(c *gin.Context) {
+		ctx := c.Request.Context()
+
+		// Validate parameters
+		var body Body
+		err := c.ShouldBind(&body)
+		if err != nil {
+			respondWithError(c, common.NewError(common.ErrorCodeParameterInvalid, err, common.WithMsg("invalid parameter")))
+			return
+		}
+
+		// Invoke service
+		trader, err := app.BarterService.LoginTrader(ctx, barter.LoginTraderParam{
+			Email:    body.Email,
+			Password: body.Password,
+		})
+		if err != nil {
+			respondWithError(c, err)
+			return
+		}
+		token, err := app.TokenService.GenerateTraderToken(ctx, *trader)
+		if err != nil {
+			respondWithError(c, err)
+			return
+		}
+
+		resp := Response{
+			TraderID: trader.ID,
+			Token:    token,
+		}
+		respondWithJSON(c, http.StatusOK, resp)
+	}
+}
