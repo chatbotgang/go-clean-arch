@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"context"
+	"database/sql"
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/jmoiron/sqlx"
@@ -21,11 +22,11 @@ func NewPostgresRepository(ctx context.Context, db *sqlx.DB) *PostgresRepository
 }
 
 // sqlContextGetter is an interface provided both by transaction and standard db connection
-//type sqlContextGetter interface {
-//	GetContext(ctx context.Context, dest interface{}, query string, args ...interface{}) error
-//	SelectContext(ctx context.Context, dest interface{}, query string, args ...interface{}) error
-//	ExecContext(ctx context.Context, query string, args ...interface{}) (sql.Result, error)
-//}
+type sqlContextGetter interface {
+	GetContext(ctx context.Context, dest interface{}, query string, args ...interface{}) error
+	SelectContext(ctx context.Context, dest interface{}, query string, args ...interface{}) error
+	ExecContext(ctx context.Context, query string, args ...interface{}) (sql.Result, error)
+}
 
 //func (r *PostgresRepository) beginTx() (*sqlx.Tx, common.Error) {
 //	tx, err := r.db.Beginx()
