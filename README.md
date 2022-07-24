@@ -16,12 +16,8 @@ Crescendo Barter is a second-hand goods exchange application in which people can
     - As a trader, I want to see all my posted goods.
     - As a trader, I want to see others’ posted goods.
     - As a trader, I want to remove some of my goods from the application.
-- Exchange proposals
-    - As a trader, I want to apply an exchange proposal so that I can exchange my goods with others’.
-    - As the application owner, I wanna every trader could apply at most 10 proposals at the same time so that they will not abuse the application.
-    - As a trader, I want to see all proposals to me.
-    - As a trader, I want to approve or disapprove  a proposal.
-    - As a trader, I want to ownerships of goods are exchanged when a proposal is approved.
+- Goods Exchange
+    - As a trader, I want to exchange my own goods with others.
 
 ## 2. Codebase Architecture
 
