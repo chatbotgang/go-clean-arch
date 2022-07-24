@@ -1,4 +1,4 @@
-package barter
+package auth
 
 import (
 	"context"
@@ -29,13 +29,13 @@ func TestBarterService_RegisterTrader(t *testing.T) {
 	// Test cases
 	testCases := []struct {
 		Name         string
-		SetupService func(t *testing.T) *BarterService
+		SetupService func(t *testing.T) *AuthService
 		ExpectError  bool
 	}{
 		{
 			Name: "trader does not exist",
-			SetupService: func(t *testing.T) *BarterService {
-				mock := buildBarterServiceMock(ctrl)
+			SetupService: func(t *testing.T) *AuthService {
+				mock := buildServiceMock(ctrl)
 
 				trader := args.Trader
 				password := args.Password
@@ -43,15 +43,15 @@ func TestBarterService_RegisterTrader(t *testing.T) {
 				mock.AuthServer.EXPECT().RegisterAccount(gomock.Any(), trader.Email, password).Return(trader.UID, nil)
 				mock.TraderRepo.EXPECT().CreateTrader(gomock.Any(), gomock.Any()).Return(&trader, nil)
 
-				service := buildBarterService(mock)
+				service := buildService(mock)
 				return service
 			},
 			ExpectError: false,
 		},
 		{
 			Name: "failed to register trader",
-			SetupService: func(t *testing.T) *BarterService {
-				mock := buildBarterServiceMock(ctrl)
+			SetupService: func(t *testing.T) *AuthService {
+				mock := buildServiceMock(ctrl)
 
 				trader := args.Trader
 				password := args.Password
@@ -59,35 +59,35 @@ func TestBarterService_RegisterTrader(t *testing.T) {
 				mock.AuthServer.EXPECT().RegisterAccount(gomock.Any(), trader.Email, password).Return(trader.UID, nil)
 				mock.TraderRepo.EXPECT().CreateTrader(gomock.Any(), gomock.Any()).Return(nil, common.BaseError{})
 
-				service := buildBarterService(mock)
+				service := buildService(mock)
 				return service
 			},
 			ExpectError: true,
 		},
 		{
 			Name: "failed to register account",
-			SetupService: func(t *testing.T) *BarterService {
-				mock := buildBarterServiceMock(ctrl)
+			SetupService: func(t *testing.T) *AuthService {
+				mock := buildServiceMock(ctrl)
 
 				trader := args.Trader
 				password := args.Password
 				mock.TraderRepo.EXPECT().GetTraderByEmail(gomock.Any(), trader.Email).Return(nil, common.BaseError{})
 				mock.AuthServer.EXPECT().RegisterAccount(gomock.Any(), trader.Email, password).Return("", common.BaseError{})
 
-				service := buildBarterService(mock)
+				service := buildService(mock)
 				return service
 			},
 			ExpectError: true,
 		},
 		{
 			Name: "trader exist",
-			SetupService: func(t *testing.T) *BarterService {
-				mock := buildBarterServiceMock(ctrl)
+			SetupService: func(t *testing.T) *AuthService {
+				mock := buildServiceMock(ctrl)
 
 				trader := args.Trader
 				mock.TraderRepo.EXPECT().GetTraderByEmail(gomock.Any(), trader.Email).Return(&trader, nil)
 
-				service := buildBarterService(mock)
+				service := buildService(mock)
 				return service
 			},
 			ExpectError: true,
@@ -132,48 +132,48 @@ func TestBarterService_LoginTrader(t *testing.T) {
 	// Test cases
 	testCases := []struct {
 		Name         string
-		SetupService func(t *testing.T) *BarterService
+		SetupService func(t *testing.T) *AuthService
 		ExpectError  bool
 	}{
 		{
 			Name: "success",
-			SetupService: func(t *testing.T) *BarterService {
-				mock := buildBarterServiceMock(ctrl)
+			SetupService: func(t *testing.T) *AuthService {
+				mock := buildServiceMock(ctrl)
 
 				trader := args.Trader
 				password := args.Password
 				mock.TraderRepo.EXPECT().GetTraderByEmail(gomock.Any(), trader.Email).Return(&trader, nil)
 				mock.AuthServer.EXPECT().AuthenticateAccount(gomock.Any(), trader.Email, password).Return(nil)
 
-				service := buildBarterService(mock)
+				service := buildService(mock)
 				return service
 			},
 			ExpectError: false,
 		},
 		{
 			Name: "invalid password",
-			SetupService: func(t *testing.T) *BarterService {
-				mock := buildBarterServiceMock(ctrl)
+			SetupService: func(t *testing.T) *AuthService {
+				mock := buildServiceMock(ctrl)
 
 				trader := args.Trader
 				password := args.Password
 				mock.TraderRepo.EXPECT().GetTraderByEmail(gomock.Any(), trader.Email).Return(&trader, nil)
 				mock.AuthServer.EXPECT().AuthenticateAccount(gomock.Any(), trader.Email, password).Return(common.BaseError{})
 
-				service := buildBarterService(mock)
+				service := buildService(mock)
 				return service
 			},
 			ExpectError: true,
 		},
 		{
 			Name: "email does not exist",
-			SetupService: func(t *testing.T) *BarterService {
-				mock := buildBarterServiceMock(ctrl)
+			SetupService: func(t *testing.T) *AuthService {
+				mock := buildServiceMock(ctrl)
 
 				trader := args.Trader
 				mock.TraderRepo.EXPECT().GetTraderByEmail(gomock.Any(), trader.Email).Return(nil, common.BaseError{})
 
-				service := buildBarterService(mock)
+				service := buildService(mock)
 				return service
 			},
 			ExpectError: true,

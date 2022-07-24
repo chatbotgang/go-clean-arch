@@ -1,4 +1,4 @@
-package barter
+package auth
 
 import (
 	"context"
@@ -14,7 +14,7 @@ type RegisterTraderParam struct {
 	Password string
 }
 
-func (s *BarterService) RegisterTrader(ctx context.Context, param RegisterTraderParam) (*barter.Trader, common.Error) {
+func (s *AuthService) RegisterTrader(ctx context.Context, param RegisterTraderParam) (*barter.Trader, common.Error) {
 	// Check the given trader email exist or not
 	_, err := s.traderRepo.GetTraderByEmail(ctx, param.Email)
 	if err == nil {
@@ -46,7 +46,7 @@ type LoginTraderParam struct {
 	Password string
 }
 
-func (s *BarterService) LoginTrader(ctx context.Context, param LoginTraderParam) (*barter.Trader, common.Error) {
+func (s *AuthService) LoginTrader(ctx context.Context, param LoginTraderParam) (*barter.Trader, common.Error) {
 	// Check the given trader email exist or not
 	trader, err := s.traderRepo.GetTraderByEmail(ctx, param.Email)
 	if err != nil {

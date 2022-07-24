@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/chatbotgang/go-clean-architecture-template/internal/app"
-	"github.com/chatbotgang/go-clean-architecture-template/internal/app/service/barter"
+	"github.com/chatbotgang/go-clean-architecture-template/internal/app/service/auth"
 	"github.com/chatbotgang/go-clean-architecture-template/internal/domain/common"
 )
 
@@ -38,7 +38,7 @@ func RegisterTrader(app *app.Application) gin.HandlerFunc {
 		}
 
 		// Invoke service
-		trader, err := app.BarterService.RegisterTrader(ctx, barter.RegisterTraderParam{
+		trader, err := app.AuthService.RegisterTrader(ctx, auth.RegisterTraderParam{
 			Email:    body.Email,
 			Name:     body.Name,
 			Password: body.Password,
@@ -82,7 +82,7 @@ func LoginTrader(app *app.Application) gin.HandlerFunc {
 		}
 
 		// Invoke service
-		trader, err := app.BarterService.LoginTrader(ctx, barter.LoginTraderParam{
+		trader, err := app.AuthService.LoginTrader(ctx, auth.LoginTraderParam{
 			Email:    body.Email,
 			Password: body.Password,
 		})
@@ -90,7 +90,7 @@ func LoginTrader(app *app.Application) gin.HandlerFunc {
 			respondWithError(c, err)
 			return
 		}
-		token, err := app.TokenService.GenerateTraderToken(ctx, *trader)
+		token, err := app.AuthService.GenerateTraderToken(ctx, *trader)
 		if err != nil {
 			respondWithError(c, err)
 			return

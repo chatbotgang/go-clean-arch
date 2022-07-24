@@ -1,4 +1,4 @@
-package barter
+package auth
 
 import (
 	"context"
