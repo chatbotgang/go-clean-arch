@@ -35,6 +35,20 @@ func (m *MockAuthServer) EXPECT() *MockAuthServerMockRecorder {
 	return m.recorder
 }
 
+// AuthenticateAccount mocks base method.
+func (m *MockAuthServer) AuthenticateAccount(arg0 context.Context, arg1, arg2 string) common.Error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AuthenticateAccount", arg0, arg1, arg2)
+	ret0, _ := ret[0].(common.Error)
+	return ret0
+}
+
+// AuthenticateAccount indicates an expected call of AuthenticateAccount.
+func (mr *MockAuthServerMockRecorder) AuthenticateAccount(arg0, arg1, arg2 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AuthenticateAccount", reflect.TypeOf((*MockAuthServer)(nil).AuthenticateAccount), arg0, arg1, arg2)
+}
+
 // RegisterAccount mocks base method.
 func (m *MockAuthServer) RegisterAccount(arg0 context.Context, arg1, arg2 string) (string, common.Error) {
 	m.ctrl.T.Helper()
