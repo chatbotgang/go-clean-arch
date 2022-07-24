@@ -21,7 +21,7 @@ func registerAPIHandlers(router *gin.Engine, app *app.Application) {
 	v1.GET("/health", handlerHealthCheck())
 
 	// Add auth namespace
-	authGroup := v1.Group("/barter")
+	authGroup := v1.Group("/auth")
 	{
 		authGroup.POST("/traders", RegisterTrader(app))
 	}
