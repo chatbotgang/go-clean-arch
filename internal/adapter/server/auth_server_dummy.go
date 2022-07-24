@@ -22,3 +22,7 @@ func NewAuthServer(_ context.Context, param AuthServerParam) *AuthServer {
 func (s *AuthServer) RegisterAccount(ctx context.Context, email string, password string) (string, common.Error) {
 	return uuid.NewString(), nil
 }
+
+func (s *AuthServer) AuthenticateAccount(ctx context.Context, email string, password string) common.Error {
+	return nil
+}
