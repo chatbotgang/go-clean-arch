@@ -17,7 +17,7 @@ Its eye-catching features include:
 
 ## Architecture
 
-![](/Users/jalex/Documents/go-clean-arch/docs/clean-architecture-overview.png "architecture overview")
+![](./docs/clean-architecture-overview.png "architecture overview")
 
 The proposed architecture can be separated into 4 layers, including `Router`, `Adapter`, `Application`, and `Domain`.
 * `Router` handles input request things, such as HTTP request routing, authentication, access control, and parameter validation.
