@@ -79,7 +79,6 @@ func TestBaseError_ErrorMapping(t *testing.T) {
 		Name                   string
 		TestError              Error
 		ExpectErrorName        string
-		ExpectCategory         string
 		ExpectHTTPStatus       int
 		ExpectRemoteHTTPStatus int
 	}{
@@ -87,42 +86,36 @@ func TestBaseError_ErrorMapping(t *testing.T) {
 			Name:             "internal process",
 			TestError:        NewError(ErrorCodeInternalProcess, nil),
 			ExpectErrorName:  ErrorCodeInternalProcess.Name,
-			ExpectCategory:   ErrorCodeInternalProcess.Category,
 			ExpectHTTPStatus: http.StatusInternalServerError,
 		},
 		{
 			Name:             "permission denied",
 			TestError:        NewError(ErrorCodeAuthPermissionDenied, nil),
 			ExpectErrorName:  ErrorCodeAuthPermissionDenied.Name,
-			ExpectCategory:   ErrorCodeAuthPermissionDenied.Category,
 			ExpectHTTPStatus: http.StatusForbidden,
 		},
 		{
 			Name:             "not authenticated",
 			TestError:        NewError(ErrorCodeAuthNotAuthenticated, nil),
 			ExpectErrorName:  ErrorCodeAuthNotAuthenticated.Name,
-			ExpectCategory:   ErrorCodeAuthNotAuthenticated.Category,
 			ExpectHTTPStatus: http.StatusUnauthorized,
 		},
 		{
 			Name:             "invalid parameter",
 			TestError:        NewError(ErrorCodeParameterInvalid, nil),
 			ExpectErrorName:  ErrorCodeParameterInvalid.Name,
-			ExpectCategory:   ErrorCodeParameterInvalid.Category,
 			ExpectHTTPStatus: http.StatusBadRequest,
 		},
 		{
 			Name:             "resource not found",
 			TestError:        NewError(ErrorCodeResourceNotFound, nil),
 			ExpectErrorName:  ErrorCodeResourceNotFound.Name,
-			ExpectCategory:   ErrorCodeResourceNotFound.Category,
 			ExpectHTTPStatus: http.StatusNotFound,
 		},
 		{
 			Name:                   "remote process",
 			TestError:              NewError(ErrorCodeRemoteProcess, nil, WithStatus(http.StatusBadRequest)),
 			ExpectErrorName:        ErrorCodeRemoteProcess.Name,
-			ExpectCategory:         ErrorCodeRemoteProcess.Category,
 			ExpectHTTPStatus:       http.StatusBadGateway,
 			ExpectRemoteHTTPStatus: http.StatusBadRequest,
 		},
@@ -130,7 +123,6 @@ func TestBaseError_ErrorMapping(t *testing.T) {
 			Name:             "unknown error",
 			TestError:        NewError(ErrorCode{}, nil),
 			ExpectErrorName:  "UNKNOWN_ERROR",
-			ExpectCategory:   "UNKNOWN_ERROR",
 			ExpectHTTPStatus: http.StatusInternalServerError,
 		},
 	}
@@ -143,7 +135,6 @@ func TestBaseError_ErrorMapping(t *testing.T) {
 			var baseError BaseError
 			if errors.As(err, &baseError) {
 				assert.Equal(t, c.ExpectErrorName, baseError.Name())
-				assert.Equal(t, c.ExpectCategory, baseError.Category())
 				assert.Equal(t, c.ExpectHTTPStatus, baseError.HTTPStatus())
 				assert.Equal(t, c.ExpectRemoteHTTPStatus, baseError.RemoteHTTPStatus())
 			} else {

@@ -46,7 +46,6 @@ func parseError(err error) ErrorMessage {
 	return ErrorMessage{
 		Name:       baseError.Name(),
 		Code:       baseError.HTTPStatus(),
-		Category:   ErrorCategory(baseError.Category()),
 		Message:    baseError.ClientMsg(),
 		RemoteCode: baseError.RemoteHTTPStatus(),
 		Detail:     baseError.Detail(),

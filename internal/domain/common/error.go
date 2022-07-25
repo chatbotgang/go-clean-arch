@@ -44,7 +44,6 @@ func WithDetail(detail map[string]interface{}) ErrorOption {
 type ErrorCode struct {
 	Name       string
 	StatusCode int
-	Category   string // backward-compatible the current error format TODO: remove after deprecation
 }
 
 /*
@@ -54,7 +53,6 @@ type ErrorCode struct {
 var ErrorCodeInternalProcess = ErrorCode{
 	Name:       "INTERNAL_PROCESS",
 	StatusCode: http.StatusInternalServerError,
-	Category:   "INTERNAL_ERROR",
 }
 
 /*
@@ -64,13 +62,11 @@ var ErrorCodeInternalProcess = ErrorCode{
 var ErrorCodeAuthPermissionDenied = ErrorCode{
 	Name:       "AUTH_PERMISSION_DENIED",
 	StatusCode: http.StatusForbidden,
-	Category:   "RESOURCE_ERROR",
 }
 
 var ErrorCodeAuthNotAuthenticated = ErrorCode{
 	Name:       "AUTH_NOT_AUTHENTICATED",
 	StatusCode: http.StatusUnauthorized,
-	Category:   "PARAMETER_ERROR",
 }
 
 /*
@@ -80,7 +76,6 @@ var ErrorCodeAuthNotAuthenticated = ErrorCode{
 var ErrorCodeResourceNotFound = ErrorCode{
 	Name:       "RESOURCE_NOT_FOUND",
 	StatusCode: http.StatusNotFound,
-	Category:   "RESOURCE_ERROR",
 }
 
 /*
@@ -90,7 +85,6 @@ var ErrorCodeResourceNotFound = ErrorCode{
 var ErrorCodeParameterInvalid = ErrorCode{
 	Name:       "PARAMETER_INVALID",
 	StatusCode: http.StatusBadRequest,
-	Category:   "PARAMETER_ERROR",
 }
 
 /*
@@ -100,7 +94,6 @@ var ErrorCodeParameterInvalid = ErrorCode{
 var ErrorCodeRemoteProcess = ErrorCode{
 	Name:       "REMOTE_PROCESS_ERROR",
 	StatusCode: http.StatusBadGateway,
-	Category:   "REMOTE_SERVER_ERROR",
 }
 
 // BaseError used for expressing errors occurring in application.
@@ -144,13 +137,6 @@ func (e BaseError) Name() string {
 		return "UNKNOWN_ERROR"
 	}
 	return e.code.Name
-}
-
-func (e BaseError) Category() string {
-	if e.code.Category == "" {
-		return "UNKNOWN_ERROR"
-	}
-	return e.code.Category
 }
 
 func (e BaseError) ClientMsg() string {
