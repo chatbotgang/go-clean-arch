@@ -6,48 +6,19 @@ import (
 	"strings"
 )
 
+// Error indicates a domain error
 type Error interface {
 	Error() string
-	// ClientMsg returns messages clients should know
 	ClientMsg() string
 }
 
-type ErrorOption func(Error)
-
-func WithMsg(msg string) ErrorOption {
-	return func(e Error) {
-		switch err := e.(type) {
-		case *BaseError:
-			err.clientMsg = msg
-		}
-	}
-}
-
-func WithStatus(status int) ErrorOption {
-	return func(e Error) {
-		switch err := e.(type) {
-		case *BaseError:
-			err.remoteStatus = status
-		}
-	}
-}
-
-func WithDetail(detail map[string]interface{}) ErrorOption {
-	return func(e Error) {
-		switch err := e.(type) {
-		case *BaseError:
-			err.detail = detail
-		}
-	}
-}
-
-// BaseError used for expressing errors occurring in application.
-type BaseError struct {
-	err          error
-	code         ErrorCode
-	clientMsg    string
-	remoteStatus int // proxy HTTP status code
-	detail       map[string]interface{}
+// DomainError used for expressing errors occurring in application.
+type DomainError struct {
+	code         ErrorCode              // code indicates an ErrorCode customized for domain logic.
+	err          error                  // err contains a native error. It will be logged in system logs.
+	clientMsg    string                 // clientMsg contains a message that will return to clients
+	remoteStatus int                    // remoteStatus contains proxy HTTP status code. It is used for remote process related errors.
+	detail       map[string]interface{} // detail contains some details that clients may need. It is business-driven.
 }
 
 func NewError(code ErrorCode, err error, opts ...ErrorOption) Error {
@@ -55,14 +26,14 @@ func NewError(code ErrorCode, err error, opts ...ErrorOption) Error {
 		return err
 	}
 
-	e := BaseError{code: code, err: err}
+	e := DomainError{code: code, err: err}
 	for _, o := range opts {
 		o(&e)
 	}
 	return e
 }
 
-func (e BaseError) Error() string {
+func (e DomainError) Error() string {
 	var msgs []string
 	if e.remoteStatus != 0 {
 		msgs = append(msgs, strconv.Itoa(e.remoteStatus))
@@ -77,28 +48,57 @@ func (e BaseError) Error() string {
 	return strings.Join(msgs, ": ")
 }
 
-func (e BaseError) Name() string {
+func (e DomainError) Name() string {
 	if e.code.Name == "" {
 		return "UNKNOWN_ERROR"
 	}
 	return e.code.Name
 }
 
-func (e BaseError) ClientMsg() string {
+func (e DomainError) ClientMsg() string {
 	return e.clientMsg
 }
 
-func (e BaseError) HTTPStatus() int {
+func (e DomainError) HTTPStatus() int {
 	if e.code.StatusCode == 0 {
 		return http.StatusInternalServerError
 	}
 	return e.code.StatusCode
 }
 
-func (e BaseError) RemoteHTTPStatus() int {
+func (e DomainError) RemoteHTTPStatus() int {
 	return e.remoteStatus
 }
 
-func (e BaseError) Detail() map[string]interface{} {
+func (e DomainError) Detail() map[string]interface{} {
 	return e.detail
+}
+
+type ErrorOption func(Error)
+
+func WithMsg(msg string) ErrorOption {
+	return func(e Error) {
+		switch err := e.(type) {
+		case *DomainError:
+			err.clientMsg = msg
+		}
+	}
+}
+
+func WithStatus(status int) ErrorOption {
+	return func(e Error) {
+		switch err := e.(type) {
+		case *DomainError:
+			err.remoteStatus = status
+		}
+	}
+}
+
+func WithDetail(detail map[string]interface{}) ErrorOption {
+	return func(e Error) {
+		switch err := e.(type) {
+		case *DomainError:
+			err.detail = detail
+		}
+	}
 }

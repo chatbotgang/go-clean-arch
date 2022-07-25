@@ -69,7 +69,7 @@ func TestBarterService_RemoveMyGood(t *testing.T) {
 				mock := buildServiceMock(ctrl)
 
 				good := args.Good
-				mock.GoodRepo.EXPECT().GetGoodByID(gomock.Any(), good.ID).Return(nil, common.BaseError{})
+				mock.GoodRepo.EXPECT().GetGoodByID(gomock.Any(), good.ID).Return(nil, common.DomainError{})
 
 				service := buildService(mock)
 				return service
