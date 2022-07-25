@@ -1,8 +1,48 @@
-# Go-Clean-Architecture-Template
+# Go-Clean-Arch
 
-This repo introduces a Go clean architecture template commonly used in Crescendo Lab. We are going to explain how the architecture work through a tutorial on building a sample application - **Crescendo Barter**.
+**Go-Clean-Arch** gives a DDD-lite clean architecture template that is commonly used in Crescendo's Go projects. We will introduce the proposed architecture and related designs through a tutorial on building a sample application - **Crescendo Barter**.
 
-# Crescendo Barter
+## Overview
+
+The proposed clean architecture is inspired by DDD (Domain-Driven Design), Uncle Bob's [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html), and a Go Clean Architecture project [Wild Workouts](https://github.com/ThreeDotsLabs/wild-workouts-go-ddd-example), trying to balance feature development speed and maintenance efforts.
+
+Its eye-catching features include:
+- **Layered architecture**: independent of frameworks and external systems.
+- **Testable codebase**: workflows and business logic are well protected.
+- **Ubiquitous language**: no barrier between business and engineering people.
+- **Structured logs**: integrate third-party logging services easily.
+- **First-class-citizen errors**: handle errors throughout the application in handy.
+- **Product-ready code quality**: we implemented the sample application seriously.
+- **Simple and straight**: new members could pick up the architecture within days.
+
+## Architecture
+
+![](/Users/jalex/Documents/go-clean-arch/docs/clean-architecture-overview.png "architecture overview")
+
+The proposed architecture can be separated into 4 layers, including `Router`, `Adapter`, `Application`, and `Domain`.
+* `Router` handles input request things, such as HTTP request routing, authentication, access control, and parameter validation.
+* `Adapter` handle output requests, such as accessing DB, communicate with other services, emit events.
+* `Application` handles use cases (orchestration of business rules), compositing functionalities of `Domain` and `Adapter`.
+* `Domain` handle business logic and domain models.
+
+### 1. Dependency Rules
+Between layers:
+```mermaid
+  flowchart LR
+      Router
+      Adapter
+      subgraph Application
+         Interface
+      end
+      Domain
+      
+      Router ---> Application & Domain
+      Adapter ---> Domain
+      Adapter -. implement .-> Interface
+      Application --> Domain
+```
+
+## Crescendo Barter
 
 Crescendo Barter is a second-hand goods exchange application in which people can post their old goods and exchange them with others.
 
