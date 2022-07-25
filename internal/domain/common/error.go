@@ -74,31 +74,22 @@ func (e DomainError) Detail() map[string]interface{} {
 	return e.detail
 }
 
-type ErrorOption func(Error)
+type ErrorOption func(*DomainError)
 
 func WithMsg(msg string) ErrorOption {
-	return func(e Error) {
-		switch err := e.(type) {
-		case *DomainError:
-			err.clientMsg = msg
-		}
+	return func(e *DomainError) {
+		e.clientMsg = msg
 	}
 }
 
 func WithStatus(status int) ErrorOption {
-	return func(e Error) {
-		switch err := e.(type) {
-		case *DomainError:
-			err.remoteStatus = status
-		}
+	return func(e *DomainError) {
+		e.remoteStatus = status
 	}
 }
 
 func WithDetail(detail map[string]interface{}) ErrorOption {
-	return func(e Error) {
-		switch err := e.(type) {
-		case *DomainError:
-			err.detail = detail
-		}
+	return func(e *DomainError) {
+		e.detail = detail
 	}
 }
