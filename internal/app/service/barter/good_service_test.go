@@ -21,6 +21,7 @@ func TestBarterService_RemoveMyGood(t *testing.T) {
 	}
 	var args Args
 	_ = faker.FakeData(&args)
+	args.Good.OwnerID = args.Trader.ID
 
 	// Init
 	ctrl := gomock.NewController(t)
@@ -37,11 +38,8 @@ func TestBarterService_RemoveMyGood(t *testing.T) {
 			SetupService: func(t *testing.T) *BarterService {
 				mock := buildServiceMock(ctrl)
 
-				trader := args.Trader
-				good := args.Good
-				good.OwnerID = trader.ID
-				mock.GoodRepo.EXPECT().GetGoodByID(gomock.Any(), good.ID).Return(&good, nil)
-				mock.GoodRepo.EXPECT().DeleteGoodByID(gomock.Any(), good.ID).Return(nil)
+				mock.GoodRepo.EXPECT().GetGoodByID(gomock.Any(), args.Good.ID).Return(&args.Good, nil)
+				mock.GoodRepo.EXPECT().DeleteGoodByID(gomock.Any(), args.Good.ID).Return(nil)
 
 				service := buildService(mock)
 				return service
@@ -53,9 +51,8 @@ func TestBarterService_RemoveMyGood(t *testing.T) {
 			SetupService: func(t *testing.T) *BarterService {
 				mock := buildServiceMock(ctrl)
 
-				trader := args.Trader
 				good := args.Good
-				good.OwnerID = trader.ID + 1
+				good.OwnerID++
 				mock.GoodRepo.EXPECT().GetGoodByID(gomock.Any(), good.ID).Return(&good, nil)
 
 				service := buildService(mock)
@@ -68,8 +65,7 @@ func TestBarterService_RemoveMyGood(t *testing.T) {
 			SetupService: func(t *testing.T) *BarterService {
 				mock := buildServiceMock(ctrl)
 
-				good := args.Good
-				mock.GoodRepo.EXPECT().GetGoodByID(gomock.Any(), good.ID).Return(nil, common.DomainError{})
+				mock.GoodRepo.EXPECT().GetGoodByID(gomock.Any(), args.Good.ID).Return(nil, common.DomainError{})
 
 				service := buildService(mock)
 				return service
