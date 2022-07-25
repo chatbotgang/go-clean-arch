@@ -37,11 +37,9 @@ func TestBarterService_RegisterTrader(t *testing.T) {
 			SetupService: func(t *testing.T) *AuthService {
 				mock := buildServiceMock(ctrl)
 
-				trader := args.Trader
-				password := args.Password
-				mock.TraderRepo.EXPECT().GetTraderByEmail(gomock.Any(), trader.Email).Return(nil, common.DomainError{})
-				mock.AuthServer.EXPECT().RegisterAccount(gomock.Any(), trader.Email, password).Return(trader.UID, nil)
-				mock.TraderRepo.EXPECT().CreateTrader(gomock.Any(), gomock.Any()).Return(&trader, nil)
+				mock.TraderRepo.EXPECT().GetTraderByEmail(gomock.Any(), args.Trader.Email).Return(nil, common.DomainError{})
+				mock.AuthServer.EXPECT().RegisterAccount(gomock.Any(), args.Trader.Email, args.Password).Return(args.Trader.UID, nil)
+				mock.TraderRepo.EXPECT().CreateTrader(gomock.Any(), gomock.Any()).Return(&args.Trader, nil)
 
 				service := buildService(mock)
 				return service
@@ -53,10 +51,8 @@ func TestBarterService_RegisterTrader(t *testing.T) {
 			SetupService: func(t *testing.T) *AuthService {
 				mock := buildServiceMock(ctrl)
 
-				trader := args.Trader
-				password := args.Password
-				mock.TraderRepo.EXPECT().GetTraderByEmail(gomock.Any(), trader.Email).Return(nil, common.DomainError{})
-				mock.AuthServer.EXPECT().RegisterAccount(gomock.Any(), trader.Email, password).Return(trader.UID, nil)
+				mock.TraderRepo.EXPECT().GetTraderByEmail(gomock.Any(), args.Trader.Email).Return(nil, common.DomainError{})
+				mock.AuthServer.EXPECT().RegisterAccount(gomock.Any(), args.Trader.Email, args.Password).Return(args.Trader.UID, nil)
 				mock.TraderRepo.EXPECT().CreateTrader(gomock.Any(), gomock.Any()).Return(nil, common.DomainError{})
 
 				service := buildService(mock)
@@ -69,10 +65,8 @@ func TestBarterService_RegisterTrader(t *testing.T) {
 			SetupService: func(t *testing.T) *AuthService {
 				mock := buildServiceMock(ctrl)
 
-				trader := args.Trader
-				password := args.Password
-				mock.TraderRepo.EXPECT().GetTraderByEmail(gomock.Any(), trader.Email).Return(nil, common.DomainError{})
-				mock.AuthServer.EXPECT().RegisterAccount(gomock.Any(), trader.Email, password).Return("", common.DomainError{})
+				mock.TraderRepo.EXPECT().GetTraderByEmail(gomock.Any(), args.Trader.Email).Return(nil, common.DomainError{})
+				mock.AuthServer.EXPECT().RegisterAccount(gomock.Any(), args.Trader.Email, args.Password).Return("", common.DomainError{})
 
 				service := buildService(mock)
 				return service
@@ -84,8 +78,7 @@ func TestBarterService_RegisterTrader(t *testing.T) {
 			SetupService: func(t *testing.T) *AuthService {
 				mock := buildServiceMock(ctrl)
 
-				trader := args.Trader
-				mock.TraderRepo.EXPECT().GetTraderByEmail(gomock.Any(), trader.Email).Return(&trader, nil)
+				mock.TraderRepo.EXPECT().GetTraderByEmail(gomock.Any(), args.Trader.Email).Return(&args.Trader, nil)
 
 				service := buildService(mock)
 				return service
@@ -140,10 +133,8 @@ func TestBarterService_LoginTrader(t *testing.T) {
 			SetupService: func(t *testing.T) *AuthService {
 				mock := buildServiceMock(ctrl)
 
-				trader := args.Trader
-				password := args.Password
-				mock.TraderRepo.EXPECT().GetTraderByEmail(gomock.Any(), trader.Email).Return(&trader, nil)
-				mock.AuthServer.EXPECT().AuthenticateAccount(gomock.Any(), trader.Email, password).Return(nil)
+				mock.TraderRepo.EXPECT().GetTraderByEmail(gomock.Any(), args.Trader.Email).Return(&args.Trader, nil)
+				mock.AuthServer.EXPECT().AuthenticateAccount(gomock.Any(), args.Trader.Email, args.Password).Return(nil)
 
 				service := buildService(mock)
 				return service
@@ -151,14 +142,12 @@ func TestBarterService_LoginTrader(t *testing.T) {
 			ExpectError: false,
 		},
 		{
-			Name: "invalid password",
+			Name: "invalid args.Password",
 			SetupService: func(t *testing.T) *AuthService {
 				mock := buildServiceMock(ctrl)
 
-				trader := args.Trader
-				password := args.Password
-				mock.TraderRepo.EXPECT().GetTraderByEmail(gomock.Any(), trader.Email).Return(&trader, nil)
-				mock.AuthServer.EXPECT().AuthenticateAccount(gomock.Any(), trader.Email, password).Return(common.DomainError{})
+				mock.TraderRepo.EXPECT().GetTraderByEmail(gomock.Any(), args.Trader.Email).Return(&args.Trader, nil)
+				mock.AuthServer.EXPECT().AuthenticateAccount(gomock.Any(), args.Trader.Email, args.Password).Return(common.DomainError{})
 
 				service := buildService(mock)
 				return service
@@ -170,8 +159,7 @@ func TestBarterService_LoginTrader(t *testing.T) {
 			SetupService: func(t *testing.T) *AuthService {
 				mock := buildServiceMock(ctrl)
 
-				trader := args.Trader
-				mock.TraderRepo.EXPECT().GetTraderByEmail(gomock.Any(), trader.Email).Return(nil, common.DomainError{})
+				mock.TraderRepo.EXPECT().GetTraderByEmail(gomock.Any(), args.Trader.Email).Return(nil, common.DomainError{})
 
 				service := buildService(mock)
 				return service
