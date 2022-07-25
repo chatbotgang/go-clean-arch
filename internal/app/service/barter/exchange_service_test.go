@@ -59,7 +59,7 @@ func TestBarterService_ExchangeGoods(t *testing.T) {
 				targetGood := args.TargetGood
 				mock.GoodRepo.EXPECT().GetGoodByID(gomock.Any(), requestGood.ID).Return(&requestGood, nil)
 				mock.GoodRepo.EXPECT().GetGoodByID(gomock.Any(), targetGood.ID).Return(&targetGood, nil)
-				mock.GoodRepo.EXPECT().UpdateGoods(gomock.Any(), gomock.Any()).Return(nil, common.BaseError{})
+				mock.GoodRepo.EXPECT().UpdateGoods(gomock.Any(), gomock.Any()).Return(nil, common.DomainError{})
 
 				service := buildService(mock)
 				return service
@@ -74,7 +74,7 @@ func TestBarterService_ExchangeGoods(t *testing.T) {
 				requestGood := args.RequestGood
 				targetGood := args.TargetGood
 				mock.GoodRepo.EXPECT().GetGoodByID(gomock.Any(), requestGood.ID).Return(&requestGood, nil)
-				mock.GoodRepo.EXPECT().GetGoodByID(gomock.Any(), targetGood.ID).Return(nil, common.BaseError{})
+				mock.GoodRepo.EXPECT().GetGoodByID(gomock.Any(), targetGood.ID).Return(nil, common.DomainError{})
 
 				service := buildService(mock)
 				return service
@@ -101,7 +101,7 @@ func TestBarterService_ExchangeGoods(t *testing.T) {
 				mock := buildServiceMock(ctrl)
 
 				requestGood := args.RequestGood
-				mock.GoodRepo.EXPECT().GetGoodByID(gomock.Any(), requestGood.ID).Return(nil, common.BaseError{})
+				mock.GoodRepo.EXPECT().GetGoodByID(gomock.Any(), requestGood.ID).Return(nil, common.DomainError{})
 
 				service := buildService(mock)
 				return service

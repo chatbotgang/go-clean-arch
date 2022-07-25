@@ -38,16 +38,16 @@ func respondWithError(c *gin.Context, err error) {
 }
 
 func parseError(err error) ErrorMessage {
-	var baseError common.BaseError
+	var domainError common.DomainError
 	// We don't check if errors.As is valid or not
-	// because an empty common.BaseError would return default error data.
-	_ = errors.As(err, &baseError)
+	// because an empty common.DomainError would return default error data.
+	_ = errors.As(err, &domainError)
 
 	return ErrorMessage{
-		Name:       baseError.Name(),
-		Code:       baseError.HTTPStatus(),
-		Message:    baseError.ClientMsg(),
-		RemoteCode: baseError.RemoteHTTPStatus(),
-		Detail:     baseError.Detail(),
+		Name:       domainError.Name(),
+		Code:       domainError.HTTPStatus(),
+		Message:    domainError.ClientMsg(),
+		RemoteCode: domainError.RemoteHTTPStatus(),
+		Detail:     domainError.Detail(),
 	}
 }

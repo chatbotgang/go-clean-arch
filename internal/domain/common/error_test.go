@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestBaseError_Option(t *testing.T) {
+func TestDomainError_Option(t *testing.T) {
 	t.Parallel()
 
 	msg := "random client message"
@@ -50,28 +50,28 @@ func TestBaseError_Option(t *testing.T) {
 		t.Run(c.Name, func(t *testing.T) {
 			err := c.TestError
 
-			var baseError BaseError
-			if errors.As(err, &baseError) {
+			var domainError DomainError
+			if errors.As(err, &domainError) {
 				if c.WithMsg {
-					assert.EqualValues(t, msg, baseError.ClientMsg())
+					assert.EqualValues(t, msg, domainError.ClientMsg())
 				}
 				if c.WitStatus {
-					assert.EqualValues(t, status, baseError.RemoteHTTPStatus())
+					assert.EqualValues(t, status, domainError.RemoteHTTPStatus())
 				}
 				if c.WitDeniedPermission {
-					assert.Contains(t, baseError.Error(), "no permission to")
+					assert.Contains(t, domainError.Error(), "no permission to")
 				}
 				if c.WithDetail {
-					assert.Contains(t, baseError.Detail(), "channel_id")
-					assert.Contains(t, baseError.Detail(), "member_name")
-					assert.Equal(t, detail, baseError.Detail())
+					assert.Contains(t, domainError.Detail(), "channel_id")
+					assert.Contains(t, domainError.Detail(), "member_name")
+					assert.Equal(t, detail, domainError.Detail())
 				}
 			}
 		})
 	}
 }
 
-func TestBaseError_ErrorMapping(t *testing.T) {
+func TestDomainError_ErrorMapping(t *testing.T) {
 	t.Parallel()
 
 	// Test cases
@@ -132,11 +132,11 @@ func TestBaseError_ErrorMapping(t *testing.T) {
 		t.Run(c.Name, func(t *testing.T) {
 			err := c.TestError
 
-			var baseError BaseError
-			if errors.As(err, &baseError) {
-				assert.Equal(t, c.ExpectErrorName, baseError.Name())
-				assert.Equal(t, c.ExpectHTTPStatus, baseError.HTTPStatus())
-				assert.Equal(t, c.ExpectRemoteHTTPStatus, baseError.RemoteHTTPStatus())
+			var domainError DomainError
+			if errors.As(err, &domainError) {
+				assert.Equal(t, c.ExpectErrorName, domainError.Name())
+				assert.Equal(t, c.ExpectHTTPStatus, domainError.HTTPStatus())
+				assert.Equal(t, c.ExpectRemoteHTTPStatus, domainError.RemoteHTTPStatus())
 			} else {
 				t.Error("failed to match error type")
 			}
