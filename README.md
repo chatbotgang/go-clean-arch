@@ -25,6 +25,10 @@ The proposed architecture can be separated into 4 layers, including `Router`, `A
 * `Application` handles use cases (orchestration of business rules), compositing functionalities of `Domain` and `Adapter`.
 * `Domain` handle business logic and domain models.
 
+### Designs and Decisions
+
+Check [architectural designs and decisions](./docs/architectural-design-and-decision.md) for details.
+
 ### Dependency Rules
 ```mermaid
   flowchart LR
