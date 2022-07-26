@@ -1,6 +1,6 @@
 # Go-Clean-Arch
 
-**Go-Clean-Arch** gives a DDD-lite clean architecture template that is commonly used in Crescendo's Go projects. We will introduce the proposed architecture and related designs through a tutorial on building a sample application - **Crescendo Barter**.
+**Go-Clean-Arch** gives a DDD-lite clean architecture template that is commonly used in Crescendo's Go projects. We will introduce the proposed architecture and related designs through a tutorial on building a sample application - [Crescendo Barter](#crescendo-barter).
 
 ## Overview
 
