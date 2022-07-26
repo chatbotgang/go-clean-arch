@@ -20,25 +20,38 @@ Our proposed clean architecture would provide the following features:
 
 ![](./docs/clean-architecture-overview.png "architecture overview")
 
-The proposed architecture can be separated into 4 layers, including `Router`, `Adapter`, `Application`, and `Domain`.
+The proposed architecture can be separated into 4 layers, including `Domain`, `Application`, `Router`, and `Adapter`.
+- `Domain` handles domain models and critical business logic.
+- `Application` handles use cases (orchestration of business rules), compositing functionalities of `Domain` and `Adapter`.
 - `Router` handles input request things, such as HTTP request routing, authentication, access control, and parameter validation.
 - `Adapter` handle output requests, such as accessing DB, communicate with other services, emit events.
-- `Application` handles use cases (orchestration of business rules), compositing functionalities of `Domain` and `Adapter`.
-- `Domain` handle business logic and domain models.
+
 
 ### Dependency Rules
+
 ```mermaid
-  flowchart LR
-      Router
+  flowchart 
+      subgraph l1[Adapter]
+         subgraph l2[Router]
+            subgraph l3[Application]
+               l4[Domain]
+            end
+         end
+      end
+```
+
+```mermaid
+  flowchart LR      
       Adapter
+      Router
       subgraph Application
          Interface
       end
       Domain
       
-      Router ---> Application & Domain
-      Adapter ---> Domain
+      Router --> Application & Domain
       Adapter -. implement .-> Interface
+      Adapter ----> Domain
       Application --> Domain
 ```
 
