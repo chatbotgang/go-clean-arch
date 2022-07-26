@@ -12,7 +12,7 @@ Our proposed clean architecture would provide the following features:
 - **Testable**. Critical logic is well protected and validated.
 - **Ubiquitous language**. No communication barrier between business and engineering people.
 - **First-class-citizen errors**. Handle errors throughout the application in handy.
-- **Structured logs**. Both API and system logs coulde integrate with third-party logging services easily.
+- **Traceable requests**. Internal behaviors of a request could be observed through API and system logs.
 - **Product-ready**. Teams could use this template of the proposed architecture directly.
 - **Simple and straigh**t. Not messy, not over-SOLID. Any new member could pick up the architecture within days.
 
