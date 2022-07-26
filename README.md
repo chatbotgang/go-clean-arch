@@ -26,10 +26,7 @@ The proposed architecture can be separated into 4 layers, including `Domain`, `A
 - `Router` handles input request things, such as HTTP request routing, authentication, access control, and parameter validation.
 - `Adapter` handle output requests, such as accessing DB, communicate with other services, emit events.
 
-
-### Designs and Decisions
-
-Check [architectural designs and decisions](./docs/architectural-design-and-decision.md) for details.
+Check [architectural designs and decisions](./docs/architectural-design-and-decision.md) for more details.
 
 ### Dependency Rules
 
