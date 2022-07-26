@@ -47,16 +47,18 @@ Crescendo Barter is a second-hand goods exchange application in which people can
 
 ### User Stories
 
-- Account management
-    - As a client, I want to register a trader account.
-    - As a client, I want to log in to the application through the registered trader account.
-- Second-hand Goods
-    - As a trader, I want to post my old goods to the application so that others can see what I have.
-    - As a trader, I want to see all my posted goods.
-    - As a trader, I want to see others’ posted goods.
-    - As a trader, I want to remove some of my goods from the application.
-- Goods Exchange
-    - As a trader, I want to exchange my own goods with others.
+Account management:
+- As a client, I want to register a trader account.
+- As a client, I want to log in to the application through the registered trader account.
+
+Second-hand Goods:
+- As a trader, I want to post my old goods to the application so that others can see what I have.
+- As a trader, I want to see all my posted goods.
+- As a trader, I want to see others’ posted goods.
+- As a trader, I want to remove some of my goods from the application.
+
+Goods Exchange:
+- As a trader, I want to exchange my own goods with others.
     
 ### Project Dependencies
 
