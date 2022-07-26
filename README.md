@@ -58,14 +58,27 @@ Crescendo Barter is a second-hand goods exchange application in which people can
 - Goods Exchange
     - As a trader, I want to exchange my own goods with others.
     
-### Application Dependencies
+### Project Dependencies
 
-* [Golang](https://go.dev): ^1.17
-* [gin](https://github.com/gin-gonic/gin): ~1.7.7
-* [zerolog](https://github.com/rs/zerolog): ~1.26.1
-* [sqlx](https://github.com/jmoiron/sqlx): ~1.3.4
-* [PostgreSQL](https://www.postgresql.org/docs/13/index.html): 13
+<details><summary>Main application</summary>
+  
+- [Golang](https://go.dev): ^1.17
+- [gin](https://github.com/gin-gonic/gin): ~1.7.7
+- [zerolog](https://github.com/rs/zerolog): ~1.26.1
+- [sqlx](https://github.com/jmoiron/sqlx): ~1.3.4
+- [PostgreSQL](https://www.postgresql.org/docs/13/index.html): ^13
+  
+</details>
 
+<details><summary>Test usage</summary>
+  
+- [testify](https://github.com/stretchr/testify): ^1.8.0
+- [mockgen](https://github.com/golang/mock): ~1.6.0
+- [testfixtures](https://github.com/go-testfixtures/testfixtures): ^3.8.0
+- [migrate](https://github.com/golang-migrate/migrate): ^4.15.0
+- [dockertest](https://github.com/ory/dockertest): ^3.9.0
+
+</details>
 
 ### Development Guideline
 
