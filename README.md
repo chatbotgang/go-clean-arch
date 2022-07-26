@@ -27,6 +27,10 @@ The proposed architecture can be separated into 4 layers, including `Domain`, `A
 - `Adapter` handle output requests, such as accessing DB, communicate with other services, emit events.
 
 
+### Designs and Decisions
+
+Check [architectural designs and decisions](./docs/architectural-design-and-decision.md) for details.
+
 ### Dependency Rules
 
 ```mermaid
