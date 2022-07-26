@@ -6,24 +6,25 @@
 
 The proposed clean architecture is inspired by DDD (Domain-Driven Design), Uncle Bob's [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html), and a Go Clean Architecture project [Wild Workouts](https://github.com/ThreeDotsLabs/wild-workouts-go-ddd-example), trying to balance feature development speed and maintenance efforts.
 
-Its eye-catching features include:
-- **Layered architecture**: independent of frameworks and external systems.
-- **Testable codebase**: workflows and business logic are well protected.
-- **Ubiquitous language**: no barrier between business and engineering people.
-- **Structured logs**: integrate third-party logging services easily.
-- **First-class-citizen errors**: handle errors throughout the application in handy.
-- **Product-ready code quality**: we implemented the sample application seriously.
-- **Simple and straight**: new members could pick up the architecture within days.
+## Features
+
+Our proposed clean architecture would provide the following features:
+- **Testable**. Critical logic is well protected and validated.
+- **Ubiquitous language**. No communication barrier between business and engineering people.
+- **First-class-citizen errors**. Handle errors throughout the application in handy.
+- **Structured logs**. Both API and system logs coulde integrate with third-party logging services easily.
+- **Product-ready**. Teams could use this template of the proposed architecture directly.
+- **Simple and straigh**t. Not messy, not over-SOLID. Any new member could pick up the architecture within days.
 
 ## Architecture
 
 ![](./docs/clean-architecture-overview.png "architecture overview")
 
 The proposed architecture can be separated into 4 layers, including `Router`, `Adapter`, `Application`, and `Domain`.
-* `Router` handles input request things, such as HTTP request routing, authentication, access control, and parameter validation.
-* `Adapter` handle output requests, such as accessing DB, communicate with other services, emit events.
-* `Application` handles use cases (orchestration of business rules), compositing functionalities of `Domain` and `Adapter`.
-* `Domain` handle business logic and domain models.
+- `Router` handles input request things, such as HTTP request routing, authentication, access control, and parameter validation.
+- `Adapter` handle output requests, such as accessing DB, communicate with other services, emit events.
+- `Application` handles use cases (orchestration of business rules), compositing functionalities of `Domain` and `Adapter`.
+- `Domain` handle business logic and domain models.
 
 ### Dependency Rules
 ```mermaid
