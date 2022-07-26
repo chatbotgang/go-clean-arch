@@ -45,7 +45,7 @@ The proposed architecture can be separated into 4 layers, including `Router`, `A
 
 Crescendo Barter is a second-hand goods exchange application in which people can post their old goods and exchange them with others.
 
-### 1. User Stories
+### User Stories
 
 - Account management
     - As a client, I want to register a trader account.
@@ -58,7 +58,7 @@ Crescendo Barter is a second-hand goods exchange application in which people can
 - Goods Exchange
     - As a trader, I want to exchange my own goods with others.
     
-### 2. Project Dependencies
+### Application Dependencies
 
 * [Golang](https://go.dev): ^1.17
 * [gin](https://github.com/gin-gonic/gin): ~1.7.7
@@ -67,6 +67,6 @@ Crescendo Barter is a second-hand goods exchange application in which people can
 * [PostgreSQL](https://www.postgresql.org/docs/13/index.html): 13
 
 
-### 3. Development Guideline
+### Development Guideline
 
 See [development guideline](./docs/development-guideline.md).
