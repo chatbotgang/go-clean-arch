@@ -26,35 +26,11 @@ The proposed architecture can be separated into 4 layers, including `Domain`, `A
 - `Router` handles input request things, such as HTTP request routing, authentication, access control, and parameter validation.
 - `Adapter` handle output requests, such as accessing DB, communicate with other services, emit events.
 
-Check [architectural designs and decisions](./docs/architectural-design-and-decision.md) for more details.
+Its dependency rules are:
 
-### Dependency Rules
+![](./docs/dependency-rules.png "dependency rules")
 
-```mermaid
-  flowchart 
-      subgraph l1[Adapter]
-         subgraph l2[Router]
-            subgraph l3[Application]
-               l4[Domain]
-            end
-         end
-      end
-```
-
-```mermaid
-  flowchart LR      
-      Adapter
-      Router
-      subgraph Application
-         Interface
-      end
-      Domain
-      
-      Router --> Application & Domain
-      Adapter -. implement .-> Interface
-      Adapter ----> Domain
-      Application --> Domain
-```
+More at [https://slides.com/jalex-chang/go-clean-arch-cresclab](https://slides.com/jalex-chang/go-clean-arch-cresclab).
 
 ## Crescendo Barter
 
