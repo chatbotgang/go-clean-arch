@@ -94,7 +94,7 @@ func (r *PostgresRepository) GetTraderByEmail(ctx context.Context, email string)
 	// get one row from result
 	if err = r.db.GetContext(ctx, &row, query, args...); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, common.NewError(common.ErrorCodeResourceNotFound, err, common.WithMsg("account is not found"))
+			return nil, common.NewError(common.ErrorCodeResourceNotFound, err, common.WithMsg("trader is not found"))
 		}
 		return nil, common.NewError(common.ErrorCodeRemoteProcess, err)
 	}
