@@ -9,12 +9,9 @@ import (
 	"github.com/chatbotgang/go-clean-architecture-template/internal/domain/common"
 )
 
-type ErrorCategory string
-
 type ErrorMessage struct {
 	Name       string                 `json:"name"`
 	Code       int                    `json:"code"`
-	Category   ErrorCategory          `json:"category"`
 	Message    string                 `json:"message,omitempty"`
 	RemoteCode int                    `json:"remoteCode,omitempty"`
 	Detail     map[string]interface{} `json:"detail,omitempty"`
