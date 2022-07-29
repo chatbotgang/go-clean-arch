@@ -1,6 +1,6 @@
 # Go-Clean-Arch
 
-**Go-Clean-Arch** gives a DDD-lite clean architecture template that is commonly used in Crescendo's Go projects. We will introduce the proposed architecture and related designs through a tutorial on building a sample application - [Crescendo Barter](#crescendo-barter).
+**Go-Clean-Arch** gives a Clean Architecture template that is commonly used in Crescendo's Go projects. We will introduce the proposed architecture and related designs through a tutorial on building a sample application - [Crescendo Barter](#crescendo-barter).
 
 ## Overview
 
@@ -8,13 +8,13 @@ The proposed clean architecture is inspired by DDD (Domain-Driven Design), Uncle
 
 ## Features
 
-Our proposed clean architecture would provide the following features:
+Our proposed clean architecture tries to provide the following features:
 - **Testable**. Critical logic is well protected and validated.
 - **Ubiquitous language**. No communication barrier between business and engineering people.
 - **First-class-citizen errors**. Handle errors throughout the application in handy.
 - **Traceable requests**. Internal behaviors of a request could be observed through API and system logs.
-- **Product-ready**. Teams could use this template of the proposed architecture directly.
-- **Simple and straigh**t. Not messy, not over-SOLID. Any new member could pick up the architecture within days.
+- **Product-ready**. Teams could use the architecture template in their new projects directly.
+- **Simple and straight**. Any new member could pick up the architecture within days.
 
 ## Architecture
 
